@@ -93,3 +93,46 @@ Console.WriteLine($"{string.Join("\n", peopleDict.Select(y => $"{y.Key} -> {y.Va
 var peopleByPersonDict = people.ToDictionary(g => g.Name);
 Console.WriteLine("Name -> Person:");
 Console.WriteLine($"{string.Join("\n", peopleByPersonDict.Select(y => $"{y.Key} -> {y.Value}"))}");
+
+
+Console.WriteLine();
+Console.WriteLine("--- Part 7C: Predicates, First, Take, Skip, Range ---");
+
+
+arr = new [] { 5, 12, 3, 18, 7, 24, 9, 16, 1, 30 };
+words = new() { "apple", "banana", "cherry", "date", "elderberry" };
+
+
+Console.WriteLine($"Any > 20: {arr.Any( x => x>20)}");
+Console.WriteLine($"All > 0: {arr.All( x => x>0)}");
+Console.WriteLine($"All > 10: {arr.All( x => x>10)}");
+
+Console.WriteLine($"Contains 7: {arr.Contains(7)}");
+Console.WriteLine($"Any elements: {arr.Any()}");
+Console.WriteLine($"First > 10: {arr.First(x => x > 10)}");
+Console.WriteLine($"First > 1000 (FirstOrDefault): {arr.FirstOrDefault(x => x > 1000)}");
+Console.WriteLine($"First word starting with 'b': {words.FirstOrDefault(x => x.StartsWith('b'))}");
+
+Console.WriteLine($"ElementAt 3: {arr.ElementAt(3)}");
+Console.WriteLine($"First > 1000 with default -1: {arr.FirstOrDefault(x => x > 1000, defaultValue: -1)}");
+Console.WriteLine($"First 3: {string.Join(" ", arr.Take(3))}");
+Console.WriteLine($"Skip 3: {string.Join(" ", arr.Skip(3))}");
+Console.WriteLine($"Skip 3, take 2: {string.Join(" ", arr.Skip(3).Take(2))}");
+Console.WriteLine($"Last 2: {string.Join(" ", arr.TakeLast(2))}");
+Console.WriteLine($"Skip last 2: {string.Join(" ", arr.SkipLast(2))}");
+
+int[] dups = { 1, 2, 2, 3, 3, 3, 4, 4, 4, 4 };
+Console.WriteLine($"Distinct: {string.Join(" ", dups.Distinct())}");
+Console.WriteLine($"Distinct count: {dups.Distinct().Count()}");
+Console.WriteLine($"Sum of word lengths: {words.Sum(l => l.Length)}");
+Console.WriteLine($"Range 1..10: {string.Join(" ", Enumerable.Range(1, 10))}");
+Console.WriteLine($"Range 0..9: {string.Join(" ", Enumerable.Range(0, 10))}");
+Console.WriteLine($"Repeat 'hi' x5: {string.Join(", ", Enumerable.Repeat("hi", 5))}");
+Console.WriteLine($"Sum 1..100: {Enumerable.Range(1, 100).Sum()}");
+Console.WriteLine($"Zero array: {string.Join(" ", Enumerable.Repeat(0, 5).ToArray())}");
+
+
+
+
+
+
