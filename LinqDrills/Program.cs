@@ -22,18 +22,6 @@ Console.WriteLine($"Filtered array: {string.Join(" ", arr.Where(x => x>10).ToArr
 List<string> words = new() { "apple", "banana", "apple", "cherry", "banana", "apple", "date", "banana" };
 
 
-
-// Console.WriteLine($"Once: {string.Join(" ", words.GroupBy(w => w).Where(x => x.Count() == 1).Select(y => y.Key))}");
-// Dictionary<string, int> freqMap = new();
-// // freqMap = words.GroupBy(w => w);
-
-// Console.WriteLine($"Freq Map: {string.Join(" ", words.GroupBy(w => w).Select(kvp => $"{kvp.Key} -> {kvp.Count()}"))}");
-// int highestCount = words.GroupBy(w => w).MaxBy(x => x.Count()).Count();
-// Console.WriteLine($"Highest Count{highestCount}: {words.GroupBy(w => w).MaxBy(x => x.Count()).Key}");
-
-// Console.WriteLine($"All Highest Count{highestCount}: {string.Join( " ", words.GroupBy(w => w).Where(x => x.Count() == highestCount).Select(y => y.Key))}");
-
-
 HashSet<string> unique = new(words);
 Console.WriteLine($"Unique words: {string.Join(" ", unique)}");
 
@@ -50,3 +38,58 @@ int highestCount = freqMap.OrderByDescending(x=> x.Value).First().Value;
 Console.WriteLine($"Most frequent: {string.Join("\n", freqMap.Where(x=> x.Value == highestCount).Select(y => $"{y.Key} (count: {y.Value})"))}");
 
 Console.WriteLine($"Words appearing once: {string.Join(" ", freqMap.Where(x=> x.Value == 1).Select(kvp => kvp.Key))}");
+
+
+
+
+
+Console.WriteLine();
+Console.WriteLine("--- Part 7B: Sort, GroupBy, ToDictionary ---");
+
+
+
+
+int[] nums = { 5, 2, 8, 1, 9, 3, 7, 4, 6 };
+
+List<(string Name, int Age)> people = new() {
+    ("alice", 30),
+    ("bob", 25),
+    ("charlie", 35),
+    ("diana", 25),
+    ("eve", 30)
+};
+
+
+Console.WriteLine($"OrderBy: {string.Join(" ", nums.OrderBy(x => x))}");
+Console.WriteLine($"OrderByDescending: {string.Join(" ", nums.OrderByDescending(x => x))}");
+Console.WriteLine($"Original nums unchanged: {string.Join(" ", nums)}");
+
+Console.WriteLine($"By age: {string.Join(" ", people.OrderBy(x => x.Age).Select(y => $"{y.Name}({y.Age})"))}");
+Console.WriteLine($"By age then name: {string.Join(" ", people.OrderBy(x => x.Age).ThenBy(z => z.Name).Select(y => $"{y.Name}({y.Age})"))}");
+Console.WriteLine($"By age desc then name: {string.Join(" ", people.OrderByDescending(x => x.Age).ThenBy(z => z.Name).Select(y => $"{y.Name}({y.Age})"))}");
+
+
+Console.WriteLine($"{string.Join("\n", people.GroupBy(x => x.Age).Select(y => $"Age {y.Key}: {string.Join(", ", y.Select(s => s.Name))}"))}");
+
+var freq = "programming".GroupBy(c => c).ToDictionary(g => g.Key, g => g.Count());
+
+Console.WriteLine("Frequency of \"programming\":");
+
+Console.WriteLine($"{string.Join("\n", freq.Select(y => $"{y.Key}: {y.Value}"))}");
+
+var Freq = "programming".GroupBy(c => c).OrderByDescending(x => x.Count()).First();
+Console.WriteLine($"Most frequent: {Freq.Key} (count: {Freq.Count()})");
+
+var Freq2 = "programming".GroupBy(c => c).MaxBy(x => x.Count());
+Console.WriteLine($"Most frequent (MaxBy): {Freq2.Key} (count: {Freq2.Count()})");
+
+
+var peopleDict = people.ToDictionary(g => g.Name, g => g.Age);
+
+Console.WriteLine("Name -> Age:");
+Console.WriteLine($"{string.Join("\n", peopleDict.Select(y => $"{y.Key} -> {y.Value}"))}");
+
+
+var peopleByPersonDict = people.ToDictionary(g => g.Name);
+Console.WriteLine("Name -> Person:");
+Console.WriteLine($"{string.Join("\n", peopleByPersonDict.Select(y => $"{y.Key} -> {y.Value}"))}");
